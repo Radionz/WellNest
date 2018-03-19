@@ -1,6 +1,6 @@
 # TOCS 2018 ATOS TEAM : WellNest
 
-Disponible ici **[WellNest](https://wellnest.fr)**
+Disponible ici **[WellNest](https://wellnest.dobl.fr)**
 
 ## Quèsaco WellNest ?
 
@@ -44,7 +44,7 @@ Voilà vous êtes prêts !
 
 ## Comment exécuter ?
 
-    Simplement placer le répertoire www dans le dossier de votre serveur web.
+Simplement placer le répertoire www dans le dossier de votre serveur web.
 
 ## Qui sommes nous ?
 
