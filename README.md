@@ -12,33 +12,33 @@ Une interface web permet de visulaliser les variables de qualité de l'environem
 
 ### Si vous n'avez pas Node.js
 
-Téchargez la dernier version ici [Node.js](https://nodejs.org/fr/)
+Téléchargez puis installez la dernière version de [Node.js](https://nodejs.org/fr/).
 
-Tester après installation le bon fonctionnement de node et npm
+Testez après installation le bon fonctionnement de node et npm.
 
     npm --version
     node --version
 
-### Installer Ionic et Cordova
+### Installez Ionic et Cordova
 
     npm install -g cordova ionic
 
-### Initialiser un nouveau projet vide
+### Initialisez un nouveau projet vide
 
     ionic start WellNest blank
 
-### Cloner le reposiory actuel
+### Clonez le reposiory actuel
 
     git clone https://github.com/Radionz/WellNest.git
 
-### Aller dans le répertoire du projet et télécharger les dépendances 
+### Allez dans le répertoire du projet et téléchargez les dépendances 
 
     cd WellNest
     npm install
 
 Voilà vous êtes prêts !
 
-### Pour démarrer le serveur de développement ionic (livre-reload)
+### Démarrez le serveur de développement ionic (livre-reload)
 
     ionic serve
 
