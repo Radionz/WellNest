@@ -23,10 +23,6 @@ Testez après installation le bon fonctionnement de node et npm.
 
     npm install -g cordova ionic
 
-### Initialisez un nouveau projet vide
-
-    ionic start WellNest blank
-
 ### Clonez le reposiory actuel
 
     git clone https://github.com/Radionz/WellNest.git
