@@ -31,7 +31,11 @@ Il fournit une véritable solution ULP permettant un fonctionnement pendant des 
 
 #### Capteurs
 
+##### Luminosité
+##### Micro
+##### Qualité de l'air
 
+#### Emetteurs ???
 
 ## Comment contribuer ?
 
@@ -72,3 +76,4 @@ Simplement placer le répertoire www dans le dossier de votre serveur web.
 Deux consultants de la sociéte Atos, dans le domaine du BigData
 - Dorian BLANC
 - Damien ORSET
+- Mohammed EL MOUMNI
