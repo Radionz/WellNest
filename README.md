@@ -4,9 +4,9 @@ Disponible ici **[WellNest](https://wellnest.dobl.fr)**
 
 ## Quèsaco WellNest ?
 
-WellNest est un boitier design et discret qui permet de monitorer la qualité de votre environment.
+WellNest est un boitier design et discret qui permet de monitorer la qualité de votre environement.
 
-Une interface web permet de visulaliser les variables de qualité de l'environement (Gêne auditive, luminosité inadaptée, qulité de l'air, etc)
+Une interface web permet de visulaliser les variables de qualité de l'environement (Gêne auditive, luminosité inadaptée, qualité de l'air, etc)
 
 ### Matériel et coûts
 
@@ -52,7 +52,7 @@ Testez après installation le bon fonctionnement de node et npm.
 
     npm install -g cordova ionic
 
-### Clonez le reposiory actuel
+### Clonez le repository actuel
 
     git clone https://github.com/Radionz/WellNest.git
 
@@ -73,7 +73,7 @@ Simplement placer le répertoire www dans le dossier de votre serveur web.
 
 ## Qui sommes nous ?
 
-Deux consultants de la sociéte Atos, dans le domaine du BigData
+Trois consultants de la sociéte Atos, dans le domaine du BigData
 - Dorian BLANC
 - Damien ORSET
 - Mohammed EL MOUMNI
