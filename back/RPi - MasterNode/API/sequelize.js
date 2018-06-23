@@ -16,10 +16,10 @@ const sequelize = new Sequelize('wellnest', 'root', 'TOCS2018', {
 sequelize
   .authenticate()
   .then(() => {
-    console.log('Connection has been established successfully.');
+    console.log('Connection has been established successfully to MySQL.');
   })
   .catch(err => {
-    console.error('Unable to connect to the database:', err);
+    console.error('Unable to connect to the MySQL database:', err);
   });
 
 const SensorData = SensorDataModel(sequelize, Sequelize)
