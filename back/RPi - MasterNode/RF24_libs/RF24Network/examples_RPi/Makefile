@@ -1,9 +1,10 @@
 #############################################################################
 #
-# Makefile for librf24mesh examples on Raspberry Pi
+# Makefile for librf24 examples on Raspberry Pi
 #
-# By:  TMRh20
-# Date:    2013/09
+# License: GPL (General Public License)
+# Author:  gnulnulf <arco@appeltaart.mine.nu>
+# Date:    2013/02/07 (version 1.0)
 #
 # Description:
 # ------------
@@ -29,18 +30,19 @@ ifeq "$(RPI)" "1"
 CCFLAGS=-Ofast -mfpu=vfp -mfloat-abi=hard -march=$(ARCH) -mtune=arm1176jzf-s -std=c++0x
 endif
 
+
 # define all programs
-PROGRAMS = RF24Mesh_Master
+PROGRAMS = rx-test helloworld_rx helloworld_tx
 SOURCES = ${PROGRAMS:=.cpp}
 
 all: ${PROGRAMS}
 
 ${PROGRAMS}: ${SOURCES}
-	g++ ${CCFLAGS} -Wall -I../ -lrf24-bcm -lrf24network -lrf24mesh -lmysqlcppconn $@.cpp -o $@
+	g++ ${CCFLAGS} -Wall -I../ $@.cpp -lrf24-bcm -lrf24network -o $@
 
 clean:
 	rm -rf $(PROGRAMS)
-	
+
 install: all
 	test -d $(prefix) || mkdir $(prefix)
 	test -d $(prefix)/bin || mkdir $(prefix)/bin

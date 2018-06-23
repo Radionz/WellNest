@@ -26,17 +26,17 @@ endif
 
 ifeq "$(RPI)" "1"
 # The recommended compiler flags for the Raspberry Pi
-CCFLAGS=-Ofast -mfpu=vfp -mfloat-abi=hard -march=$(ARCH) -mtune=arm1176jzf-s -std=c++0x
+CCFLAGS+=-Ofast -mfpu=vfp -mfloat-abi=hard -march=$(ARCH) -mtune=arm1176jzf-s
 endif
 
 # define all programs
-PROGRAMS = RF24Mesh_Master
-SOURCES = ${PROGRAMS:=.cpp}
+PROGRAMS = RF24Mesh_Ncurses_Master
+SOURCES = ${PROGRAMS2:=.cpp}
 
 all: ${PROGRAMS}
 
 ${PROGRAMS}: ${SOURCES}
-	g++ ${CCFLAGS} -Wall -I../ -lrf24-bcm -lrf24network -lrf24mesh -lmysqlcppconn $@.cpp -o $@
+	g++ ${CCFLAGS} -Wall -I../ -lncurses -lrf24-bcm -lrf24network -lrf24mesh $@.cpp -o $@
 
 clean:
 	rm -rf $(PROGRAMS)
