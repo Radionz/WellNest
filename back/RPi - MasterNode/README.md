@@ -10,6 +10,9 @@
 
 ### RF24 libs
 
+[Installing Libs to /usr/local/lib]
+[Installing Headers to /usr/local/include]
+
 #### RF24
     wget https://github.com/TMRh20/RF24/archive/master.zip
     unzip RF24-master.zip
