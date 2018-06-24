@@ -1,5 +1,5 @@
-const Sequelize = require('sequelize')
-const SensorDataModel = require('./models/sensorData')
+const Sequelize = require('sequelize');
+const SensorDataModel = require('./models/sensorData');
 
 const sequelize = new Sequelize('wellnest', 'root', 'TOCS2018', {
   host: 'localhost',

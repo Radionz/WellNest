@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const SensorData = require('./sequelize');
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op;
 const schedule = require('node-schedule');
 const moment = require('moment');
 const firebase = require('firebase-admin');
@@ -23,13 +25,16 @@ firebase.initializeApp(config);
 
 var db = firebase.database();
 var temperatureRoot = db.ref("/temperature");
+var brightnessRoot = db.ref("/brightness");
+var airQualityRoot = db.ref("/air_quality");
+var soundLevelRoot = db.ref("/sound_level");
 
 const app = express()
 app.use(bodyParser.json())
 
 // get last 100 sensorData
 app.get('/api/sensorData', (req, res) => {
-    SensorData.findAll({ limit: 100 }).then(users => res.json(users))
+    SensorData.findAll({ limit: 100 }).then(sensorDatas => res.json(sensorDatas))
 })
 
 var ex = [
@@ -37,7 +42,7 @@ var ex = [
       "id": 1,
       "nodeID": 1,
       "sensorName": "LGT",
-      "sensorValue": 195,
+      "sensorValue": 150,
       "createdAt": "2018-05-13T18:41:48.000Z"
     },
     {
@@ -51,42 +56,71 @@ var ex = [
       "id": 3,
       "nodeID": 2,
       "sensorName": "LGT",
-      "sensorValue": 21.1,
+      "sensorValue": 180,
       "createdAt": "2018-05-13T18:41:51.000Z"
     },
     {
       "id": 4,
       "nodeID": 1,
-      "sensorName": "TMP",
-      "sensorValue": 24.2,
+      "sensorName": "SND",
+      "sensorValue": 12,
       "createdAt": "2018-05-13T18:41:53.000Z"
     },
     {
       "id": 5,
       "nodeID": 2,
-      "sensorName": "TMP",
-      "sensorValue": 21.3,
+      "sensorName": "AIR",
+      "sensorValue": 14,
       "createdAt": "2018-05-13T18:41:55.000Z"
     }];
 
 var job = schedule.scheduleJob('*/5 * * * * *', function(){
     console.log('Job executed at ' + moment().format('LLLL'));
 
-
-
-    for(let sensorData of ex){     
-        switch (sensorData.sensorName) {
-            case 'TMP':
-                temperatureRoot.child("/"+sensorData.nodeID).push({
-                    "timestamp": new Date(sensorData.createdAt).getTime(),
-                    "value" : sensorData.sensorValue
-                });
-                break;
-        
-            default:
-                break;
+    SensorData.findAll({
+        where: {
+            createdAt: {
+            [Op.gt]: new Date(new Date() - 5)
+            }
         }
-    }
+    }).then(function(sensorDatas){
+        console.log(JSON.stringify(sensorDatas, null, 4));
+        
+        for(let sensorData of ex){     
+            switch (sensorData.sensorName) {
+                case 'TMP':
+                    temperatureRoot.child("/N"+sensorData.nodeID).push({
+                        "timestamp": new Date(sensorData.createdAt).getTime(),
+                        "value" : sensorData.sensorValue
+                    });
+                    break;
+
+                case 'LGT':
+                    brightnessRoot.child("/N"+sensorData.nodeID).push({
+                        "timestamp": new Date(sensorData.createdAt).getTime(),
+                        "value" : sensorData.sensorValue
+                    });
+                    break;
+
+                case 'AIR':
+                    airQualityRoot.child("/N"+sensorData.nodeID).push({
+                        "timestamp": new Date(sensorData.createdAt).getTime(),
+                        "value" : sensorData.sensorValue
+                    });
+                    break;
+
+                case 'SND':
+                    soundLevelRoot.child("/N"+sensorData.nodeID).push({
+                        "timestamp": new Date(sensorData.createdAt).getTime(),
+                        "value" : sensorData.sensorValue
+                    });
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    });
 
 });
 
