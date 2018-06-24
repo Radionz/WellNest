@@ -37,7 +37,7 @@ int main(int argc, char **argv)
   else
     printf("FAILED\n");
 
-  //radio.printDetails();
+  //adio.printDetails();
   srand(millis());
 
   sql::Connection *con;
@@ -129,7 +129,7 @@ int main(int argc, char **argv)
         {
           sql::PreparedStatement *pstmt;
 
-          pstmt = con->prepareStatement("INSERT INTO wellnest(nodeID, sensorName, sensorValue) VALUES (?, ?, ?)");
+          pstmt = con->prepareStatement("INSERT INTO sensorData(nodeID, sensorName, sensorValue) VALUES (?, ?, ?)");
           pstmt->setInt(1, mesh.getNodeID(header.from_node));
           pstmt->setString(2, sensorData.sensor_name);
           pstmt->setInt(3, sensorData.value);
