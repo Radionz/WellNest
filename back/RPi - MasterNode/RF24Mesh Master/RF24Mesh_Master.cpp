@@ -51,11 +51,11 @@ int main(int argc, char **argv)
     driver = get_driver_instance();
     con = driver->connect("tcp://127.0.0.1:3306", "root", "TOCS2018");
     /* Connect to the MySQL test database */
-    con->setSchema("test");
+    con->setSchema("wellnest");
 
     stmt = con->createStatement();
-    stmt->execute("DROP TABLE IF EXISTS wellnest");
-    stmt->execute("CREATE TABLE wellnest(id INT PRIMARY KEY NOT NULL AUTO_INCREMENT, nodeID INT NOT NULL, sensorName VARCHAR(25), sensorValue INT, createdAt DATETIME DEFAULT CURRENT_TIMESTAMP)");
+    stmt->execute("DROP TABLE IF EXISTS sensorData"); //TO BE REMOVED
+    stmt->execute("CREATE TABLE sensorData(id INT PRIMARY KEY NOT NULL AUTO_INCREMENT, nodeID INT NOT NULL, sensorName VARCHAR(25), sensorValue INT, createdAt DATETIME DEFAULT CURRENT_TIMESTAMP)");
     delete stmt;
   }
   catch (sql::SQLException &e)
