@@ -1,0 +1,25 @@
+page-home {
+    ion-auto-complete {
+        position: relative;
+        z-index: 1000;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1%;
+        display: block;
+    }
+    
+    ion-auto-complete ul {
+        position: relative;
+        z-index: 1000;
+        width: 100%;
+        left: auto;
+        right: auto;
+        display: block;
+    }
+    .leaflet-container {
+        background: transparent;
+    }
+
+}
+
