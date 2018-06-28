@@ -21,7 +21,7 @@ export class Popup {
   public airQualityChartLabels: Array<any> = []
   public temperatureLoaded = false
   public brightnessLoaded = false
-  public soundLoded = false
+  public soundLoaded = false
   public airQualityLoaded = false
 
   private limitToLoad = 20
@@ -35,7 +35,7 @@ export class Popup {
     var that = this
     firebase.database().ref('/temperature/' + NodeId).limitToLast(this.limitToLoad).once('value').then(function(snapshot) {
       let results = snapshot.val()
-      console.log(results)
+      //console.log(results)
       if (results != null && results.length != 0){
         that.temperatureChartData =  [{data: Object.keys(results).map(item => results[item].value), label: "Température", fill: false, borderColor: "red"}]
         that.temperatureChartLabels = Object.keys(results).map(item => moment.unix(Number(results[item].timestamp)).format("hh:mm"))
@@ -47,7 +47,7 @@ export class Popup {
       if (results != null && results.length != 0){
         that.soundChartData =  [{data: Object.keys(results).map(item => results[item].value), label: "Son", fill: false, borderColor: "grey"}]
         that.soundChartLabels = Object.keys(results).map(item => moment.unix(Number(results[item].timestamp)).format("hh:mm"))
-        that.soundLoded = true
+        that.soundLoaded = true
       }
     });
     firebase.database().ref('/air_quality/' + NodeId).limitToLast(this.limitToLoad).once('value').then(function(snapshot) {
@@ -66,6 +66,8 @@ export class Popup {
         that.brightnessLoaded = true
       }
     });
+
+
 
   }
   close() {
