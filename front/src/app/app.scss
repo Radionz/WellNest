@@ -20,12 +20,26 @@ ion-content {
   
 }
 
+ion-grid{
+    background-image: url('../../assets/imgs/background.jpg');
+}
+
 // [scrollbar-y-auto] .scroll-content {
 //     overflow-y: auto !important;
 // }
 .popover-content {
-    top:15%!important;
-    height: 70%!important;
+    top:10%!important;
+    height: 80%!important;
     width: 80%!important;
     left: 10%!important;
 }
+
+scroll-content {
+    display: flex;
+    flex-direction: column;
+}
+
+// ion-row {
+//     flex: 1;
+//     flex-direction: column;
+// }

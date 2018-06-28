@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { ViewController, NavParams } from 'ionic-angular';
 import * as firebase from 'firebase';
-import { empty } from 'rxjs/Observer';
+import * as moment from 'moment';
+
 
 
 @Component({
@@ -22,45 +23,46 @@ export class Popup {
   public brightnessLoaded = false
   public soundLoded = false
   public airQualityLoaded = false
+
+  private limitToLoad = 20
   constructor(public viewCtrl: ViewController, public navParams:NavParams) {
     let properties = this.navParams.get("properties");
     this.id = properties.id;
-    var that = this
     this.updateCharts(this.id, 10)
   }
 
   updateCharts(NodeId, duration){
     var that = this
-    firebase.database().ref('/temperature/' + NodeId).limitToLast(2).once('value').then(function(snapshot) {
+    firebase.database().ref('/temperature/' + NodeId).limitToLast(this.limitToLoad).once('value').then(function(snapshot) {
       let results = snapshot.val()
       console.log(results)
       if (results != null && results.length != 0){
-        that.temperatureChartData =  [{data: Object.keys(results).map(item => results[item].value), label: "Température"}]
-        that.temperatureChartLabels = Object.keys(results).map(item => results[item].timestamp)
+        that.temperatureChartData =  [{data: Object.keys(results).map(item => results[item].value), label: "Température", fill: false, borderColor: "red"}]
+        that.temperatureChartLabels = Object.keys(results).map(item => moment.unix(Number(results[item].timestamp)).format("hh:mm"))
         that.temperatureLoaded = true
       }
     });
-    firebase.database().ref('/sound_level/' + NodeId).limitToLast(2).once('value').then(function(snapshot) {
+    firebase.database().ref('/sound_level/' + NodeId).limitToLast(this.limitToLoad).once('value').then(function(snapshot) {
       let results = snapshot.val()
       if (results != null && results.length != 0){
-        that.soundChartData =  [{data: Object.keys(results).map(item => results[item].value), label: "Son"}]
-        that.soundChartLabels = Object.keys(results).map(item => results[item].timestamp)
+        that.soundChartData =  [{data: Object.keys(results).map(item => results[item].value), label: "Son", fill: false, borderColor: "grey"}]
+        that.soundChartLabels = Object.keys(results).map(item => moment.unix(Number(results[item].timestamp)).format("hh:mm"))
         that.soundLoded = true
       }
     });
-    firebase.database().ref('/air_quality/' + NodeId).limitToLast(2).once('value').then(function(snapshot) {
+    firebase.database().ref('/air_quality/' + NodeId).limitToLast(this.limitToLoad).once('value').then(function(snapshot) {
       let results = snapshot.val()
       if (results != null && results.length != 0){
-        that.airQualityChartData =  [{data: Object.keys(results).map(item => results[item].value), label: "Qualité de l'air"}]
-        that.airQualityChartLabels = Object.keys(results).map(item => results[item].timestamp)
+        that.airQualityChartData =  [{data: Object.keys(results).map(item => results[item].value), label: "Qualité de l'air", fill: false, borderColor: "green"}]
+        that.airQualityChartLabels = Object.keys(results).map(item => moment.unix(Number(results[item].timestamp)).format("hh:mm"))
         that.airQualityLoaded = true
       }
     });
-    firebase.database().ref('/brightness/' + NodeId).limitToLast(2).once('value').then(function(snapshot) {
+    firebase.database().ref('/brightness/' + NodeId).limitToLast(this.limitToLoad).once('value').then(function(snapshot) {
       let results = snapshot.val()
       if (results != null && results.length != 0){
-        that.brightnessChartData =  [{data: Object.keys(results).map(item => results[item].value), label: "Luminosité"}]
-        that.brightnessChartLabels = Object.keys(results).map(item => results[item].timestamp)
+        that.brightnessChartData =  [{data: Object.keys(results).map(item => results[item].value), label: "Luminosité", fill: false, borderColor: "yellow"}]
+        that.brightnessChartLabels = Object.keys(results).map(item => moment.unix(Number(results[item].timestamp)).format("hh:mm"))
         that.brightnessLoaded = true
       }
     });
@@ -69,34 +71,97 @@ export class Popup {
   close() {
     this.viewCtrl.dismiss();
   }
-  public lineChartOptions:any = {
+  public temperatureChartOptions:any = {
     legend: {
       labels: {
-          // This more specific font property overrides the global property
           fontColor: 'white'
       }
     },
     scales: {
       yAxes: [{
           ticks: {
-              fontColor: 'white'
+              fontColor: 'white',
+              min: -10,
+              max: 50
           },
       }],
-    xAxes: [{
+      xAxes: [{
           ticks: {
               fontColor: 'white'
           },
       }]
-  } ,
-    fill:false,
-    responsive: true
-  };
-  public lineChartColors:Array<any> = [
-    { // grey
-      backgroundColor: 'red'
     }
-  ];
+  };
+  public brightnessChartOptions:any = {
+    legend: {
+      labels: {
+          fontColor: 'white'
+      }
+    },
+    scales: {
+      yAxes: [{
+          ticks: {
+              fontColor: 'white',
+              min: 0,
+              max: 2000
+          },
+      }],
+      xAxes: [{
+          ticks: {
+              fontColor: 'white'
+          },
+      }]
+    }
+  };
+
+  public airQualityChartOptions:any = {
+    legend: {
+      labels: {
+          fontColor: 'white'
+      }
+    },
+    scales: {
+      yAxes: [{
+          ticks: {
+              fontColor: 'white',
+              min: 0,
+              max: 500
+          },
+      }],
+      xAxes: [{
+          ticks: {
+              fontColor: 'white'
+          },
+      }]
+    }
+  };
+
+  public soundChartOptions:any = {
+    legend: {
+      labels: {
+          fontColor: 'white'
+      }
+    },
+    scales: {
+      yAxes: [{
+          ticks: {
+              fontColor: 'white',
+              min: 0,
+              max: 500
+          },
+      }],
+      xAxes: [{
+          ticks: {
+              fontColor: 'white'
+          },
+      }]
+    }
+  };
+  public temperatureChartColors:Array<any> = [{ backgroundColor: 'red'}];
+  public brightnessChartColors:Array<any> = [{ backgroundColor: 'yellow'}];
+  public airQualityChartColors:Array<any> = [{ backgroundColor: 'green'}];
+  public soundChartColors:Array<any> = [{ backgroundColor: 'grey'}];
   public lineChartLegend:boolean = true;
-  public lineChartType:string = 'bar';
+  public lineChartType:string = 'line';
   
 }

@@ -1,5 +1,4 @@
 import {AutoCompleteService} from 'ionic2-auto-complete';
-import { Observable } from 'rxjs/Observable';
 import {Injectable} from "@angular/core";
 import 'rxjs/add/operator/map'
 

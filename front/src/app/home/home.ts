@@ -1,12 +1,11 @@
 import { Local } from './../../providers/local.service';
-import { Component, ViewChild, ElementRef, style } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 import * as L from 'leaflet';
 import 'leaflet-easybutton';
 import 'rxjs/add/operator/take';
 import {Platform} from 'ionic-angular';
-import { map } from 'rxjs/operator/map';
 import { PopoverController} from 'ionic-angular';
 import {Popup} from '../popup/popup';
 
@@ -121,19 +120,19 @@ export class HomePage {
             stateName: ''+i,
             onClick: function(button, map){
               for(var j = 0; j< that.floorsButtonList.length; j++){
-                if(that.floorsButtonList[j].options.id != button.options.id)
+                if(that.floorsButtonList[j].options.id != button.options['id'])
                   that.floorsButtonList[j].button.style.backgroundColor = "grey";
               }
-              button.button.style.backgroundColor = "white";
-              that.drawInMap(that.local.sitesArchitechtures[event][button.options.id]['coordinates'],
-              that.local.sitesArchitechtures[event][button.options.id]['center'],
-              that.local.sitesArchitechtures[event][button.options.id]['zoomLevel']);
+              button['button'].style.backgroundColor = "white";
+              that.drawInMap(that.local.sitesArchitechtures[event][button.options['id']]['coordinates'],
+              that.local.sitesArchitechtures[event][button.options['id']]['center'],
+              that.local.sitesArchitechtures[event][button.options['id']]['zoomLevel']);
             },
             title: 'show me the middle',
             icon: '<span class="star">'+floors[i]+'</span>'
           }]
         });
-        button.button.style.backgroundColor = color;
+        button['button'].style.backgroundColor = color;
         this.floorsButtonList.push(button);
         button.addTo(this.map);
       }

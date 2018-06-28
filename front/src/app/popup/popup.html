@@ -1,59 +1,57 @@
-<!-- <ion-content padding scrollbar-y-auto> -->
-<ion-content>
-  <ion-grid style="height: 100%;">
-    <ion-row>
-      <ion-col col-4>
-        1 of 4
-      </ion-col>
-      <ion-col col-2>
-        2 of 4
-      </ion-col>
-      <ion-col col-2>
-        3 of 4
-      </ion-col>
-      <ion-col col-4>
-        4 of 4
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-        <!-- <div style="display: block; margin-left: auto; margin-right: auto;">
+
+
+  <ion-grid style="position: absolute; height: 100%;">
+    <ion-row flex-wrap: wrap-reverse>
+      <ion-col>
+        <div style="position: absolute; width: 100%; height: 100%;">
           <canvas baseChart *ngIf="temperatureLoaded"
                     [datasets]="temperatureChartData"
                     [labels]="temperatureChartLabels"
-                    [options]="lineChartOptions"
-                    [colors]="lineChartColors"
+                    [options]="temperatureChartOptions"
+                    [colors]="temperatureChartColors"
                     [legend]="lineChartLegend"
                     [chartType]="lineChartType">
           </canvas>
         </div>
+      </ion-col>
+      <ion-col>
         <div style="display: block; margin-left: auto; margin-right: auto;">
           <canvas baseChart *ngIf="brightnessLoaded"
                       [datasets]="brightnessChartData"
                       [labels]="brightnessChartLabels"
-                      [options]="lineChartOptions"
-                      [colors]="lineChartColors"
+                      [options]="brightnessChartOptions"
+                      [colors]="brightnessChartColors"
                       [legend]="lineChartLegend"
                       [chartType]="lineChartType">
           </canvas>
         </div>
-        <div style="display: block; margin-left: auto; margin-right: auto;">
+      </ion-col>
+    </ion-row>
+    <ion-row flex-wrap: wrap-reverse>
+      <ion-col>
+        <div style="position: absolute; width: 100%; height: 100%;">
           <canvas baseChart *ngIf="airQualityLoaded"
                       [datasets]="airQualityChartData"
                       [labels]="airQualityChartLabels"
-                      [options]="lineChartOptions"
-                      [colors]="lineChartColors"
+                      [options]="airQualityChartOptions"
+                      [colors]="airQualityChartColors"
                       [legend]="lineChartLegend"
                       [chartType]="lineChartType">
           </canvas>
         </div>
+      </ion-col>
+      <ion-col>
         <div style="display: block; margin-left: auto; margin-right: auto;">
           <canvas baseChart *ngIf="soundLoded"
                       [datasets]="soundChartData"
                       [labels]="soundChartLabels"
-                      [options]="lineChartOptions"
-                      [colors]="lineChartColors"
+                      [options]="soundChartOptions"
+                      [colors]="soundChartColors"
                       [legend]="lineChartLegend"
                       [chartType]="lineChartType">
           </canvas>
-        </div> -->
-  </ion-content>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
