@@ -28,14 +28,14 @@ export class Popup {
   constructor(public viewCtrl: ViewController, public navParams:NavParams) {
     let properties = this.navParams.get("properties");
     this.id = properties.id;
-    this.updateCharts(this.id, 10)
+    this.updateCharts(this.id, 10);
+    this.updateScore(this.id);
   }
 
   updateCharts(NodeId, duration){
     var that = this
     firebase.database().ref('/temperature/' + NodeId).limitToLast(this.limitToLoad).once('value').then(function(snapshot) {
       let results = snapshot.val()
-      //console.log(results)
       if (results != null && results.length != 0){
         that.temperatureChartData =  [{data: Object.keys(results).map(item => results[item].value), label: "Température", fill: false, borderColor: "red"}]
         that.temperatureChartLabels = Object.keys(results).map(item => moment.unix(Number(results[item].timestamp)).format("hh:mm"))
@@ -66,9 +66,87 @@ export class Popup {
         that.brightnessLoaded = true
       }
     });
+  }
+  updateScore(NodeId){
+    var temperaturePromise = firebase.database().ref('/temperature/' + NodeId).limitToLast(this.limitToLoad).once('value');
+    var soundLevelPromise = firebase.database().ref('/sound_level/' + NodeId).limitToLast(this.limitToLoad).once('value');
+    var airQualityPromise = firebase.database().ref('/air_quality/' + NodeId).limitToLast(this.limitToLoad).once('value');
+    var brightnessPromise = firebase.database().ref('/brightness/' + NodeId).limitToLast(this.limitToLoad).once('value');
 
+    Promise.all([temperaturePromise, soundLevelPromise, airQualityPromise, brightnessPromise]).then(function(metrics) {
 
+      if(metrics[0].val() != null){ //temperature
+        let temperatureSum : number = 0;
+        let temperatureAvg : number = 0;
+        for(let temperatureKey in metrics[0].val()){
+          temperatureSum += metrics[0].val()[temperatureKey].value;
+        }
+        temperatureAvg = temperatureSum / Object.keys(metrics[0].val()).length;
+      }
+      
+      if(metrics[1].val() != null){ //soundLevel
+        let soundLevelSum : number = 0;
+        let soundLevelAvg : number = 0;
+        for(let soundLevelKey in metrics[1].val()){
+          soundLevelSum += metrics[1].val()[soundLevelKey].value;
+        }
+        soundLevelAvg = soundLevelSum / Object.keys(metrics[1].val()).length;
+      }
 
+      if(metrics[2].val() != null){ //airQuality
+        let airQualitySum : number = 0;
+        let airQualityAvg : number = 0;
+        for(let airQualityKey in metrics[2].val()){
+          airQualitySum += metrics[2].val()[airQualityKey].value;
+        }
+        airQualityAvg = airQualitySum / Object.keys(metrics[2].val()).length;
+      }
+
+      if(metrics[3].val() != null){ //brightness
+        let brightnessSum : number = 0;
+        let brightnessAvg : number = 0;
+        for(let brightnessKey in metrics[3].val()){
+          brightnessSum += metrics[3].val()[brightnessKey].value;
+        }
+        brightnessAvg = brightnessSum / Object.keys(metrics[3].val()).length;
+      }
+
+      let score : number = 0;
+      let count : number = 0;
+      
+      if (temperatureAvg !== undefined) {
+        score += checkAccuracy(temperatureAvg, 19, 22);
+        count++;
+      }
+      if (soundLevelAvg !== undefined) {
+        score += checkAccuracy(soundLevelAvg, 10, 15);
+        count++;
+      }
+      if (airQualityAvg !== undefined) {
+        score += checkAccuracy(airQualityAvg, 100, 120);
+        count++;
+      }
+      if (brightnessAvg !== undefined) {
+        score += checkAccuracy(brightnessAvg, 120, 180);
+        count++;
+      }
+
+      score = score/count*100;
+      console.log("Score is " + score.toFixed(1) + "/100" );
+
+      function checkAccuracy(value: number, min: number, max: number): number{
+        if (value < max && value > min){
+          return 1;
+        } else if (value > 2*max) {
+          return 0;
+        } else if (value < max) {
+          return 1-((min-value)/min);
+        } else {
+          return 1-((value-max)/max);
+        }
+      }
+      
+    });
   }
   close() {
     this.viewCtrl.dismiss();
