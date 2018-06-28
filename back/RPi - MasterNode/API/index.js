@@ -33,6 +33,11 @@ const app = express()
 app.use(bodyParser.json())
 
 // get last 100 sensorData
+app.get('/', (req, res) => {
+    res.send("<h1>WellNest API is running</h1></br><ul><li><a href='/api/sensorData'>Last 100 sensors records</a></li></ul>");
+})
+
+// get last 100 sensorData
 app.get('/api/sensorData', (req, res) => {
     SensorData.findAll({ limit: 100 }).then(sensorDatas => res.json(sensorDatas))
 })
@@ -74,13 +79,13 @@ var ex = [
       "createdAt": "2018-05-13T18:41:55.000Z"
     }];
 
-var job = schedule.scheduleJob('*/5 * * * * *', function(){
+var job = schedule.scheduleJob('*/30 * * * * *', function(){
     console.log('Job executed at ' + moment().format('LLLL'));
 
     SensorData.findAll({
         where: {
             createdAt: {
-            [Op.gt]: new Date(new Date() - 5)
+            [Op.gt]: new Date(new Date() - 30)
             }
         }
     }).then(function(sensorDatas){

@@ -19,16 +19,17 @@ struct SensorData {
   uint8_t value;
 };
 
-const int TouchPin=6;
+// const int SND_Pin=A0;
+// const int LGT_Pin=A2;
+// const int TMP_Pin=A4;
 
 void setup() {
-  pinMode(TouchPin, INPUT);
   if(DEBUG){
     Serial.begin(115200);
     Serial.print("SETUP | Connecting to the mesh network... ");
   }
 
-  //EEPROM.write(0, 0);
+  EEPROM.write(0, 0);
   NodeID = EEPROM.read(0);
   mesh.setNodeID(NodeID);
   if (NodeID == 0)
@@ -57,12 +58,10 @@ void setup() {
 void loop() {
   mesh.update();
   
-  int lightSensorValue = analogRead(A0);
+  int lightSensorValue = analogRead(A2);
   lightSensorValue = (uint8_t)map(lightSensorValue, 0, 768, 0, 255);
-  SensorData lightSensor = {"Light Sensor", lightSensorValue};
+  SensorData lightSensor = {"LGT", lightSensorValue};
 
-  uint8_t touchSensorValue = digitalRead(TouchPin);
-  SensorData touchSensor = {"Touch Sensor", touchSensorValue};
   
   if (mesh.write(&lightSensor, 'S', sizeof(lightSensor))) {
     Serial.print("Successfully send ");
@@ -71,11 +70,28 @@ void loop() {
     Serial.println(lightSensor.value);
   }
 
-  if (mesh.write(&touchSensor, 'S', sizeof(touchSensor))) {
+    int soundSensorValue = analogRead(A0);
+  soundSensorValue = (uint8_t)map(soundSensorValue, 0, 768, 0, 255);
+  SensorData soundSensor = {"SND", soundSensorValue};
+
+  
+  if (mesh.write(&soundSensor, 'S', sizeof(soundSensor))) {
     Serial.print("Successfully send ");
-    Serial.print(touchSensor.sensor_name);
+    Serial.print(soundSensor.sensor_name);
     Serial.print(" value to master node : ");
-    Serial.println(touchSensor.value);
+    Serial.println(soundSensor.value);
+  }
+
+    int temperatureSensorValue = analogRead(A4);
+  temperatureSensorValue = (uint8_t)map(temperatureSensorValue, 0, 768, 0, 255);
+  SensorData temperatureSensor = {"TMP", temperatureSensorValue};
+
+  
+  if (mesh.write(&temperatureSensor, 'S', sizeof(temperatureSensor))) {
+    Serial.print("Successfully send ");
+    Serial.print(temperatureSensor.sensor_name);
+    Serial.print(" value to master node : ");
+    Serial.println(temperatureSensor.value);
   }
   
   delay(3000);
