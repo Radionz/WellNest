@@ -12,6 +12,8 @@ import { AutoCompleteModule } from 'ionic2-auto-complete';
 import { HttpModule } from '@angular/http';
 import {Popup} from './popup/popup'
 import { ChartsModule } from 'ng2-charts';
+import { GaugeModule } from 'angular-gauge';
+import { NgxGaugeModule } from 'ngx-gauge';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDnWtrvXWUPMCF-qBdam-jr8Q8XKEkH3Ds",
@@ -38,7 +40,9 @@ export const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     IonicModule.forRoot(MyApp),
-    ChartsModule
+    ChartsModule,
+    GaugeModule.forRoot(),
+    NgxGaugeModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

@@ -144,6 +144,32 @@ export class Local implements AutoCompleteService {
                                                   36.03133177633187
                                                 ]
                                               }
+                                            },
+                                            {
+                                              "type": "Feature",
+                                              "properties": {
+                                                "id": "N1"
+                                              },
+                                              "geometry": {
+                                                "type": "Point",
+                                                "coordinates": [
+                                                  -54.84375,
+                                                  64.16810689799152
+                                                ]
+                                              }
+                                            },
+                                            {
+                                              "type": "Feature",
+                                              "properties": {
+                                                "id": "N1"
+                                              },
+                                              "geometry": {
+                                                "type": "Point",
+                                                "coordinates": [
+                                                  78.046875,
+                                                  19.973348786110602
+                                                ]
+                                              }
                                             }
                                           ]
                                         }

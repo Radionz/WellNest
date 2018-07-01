@@ -1,9 +1,25 @@
 
 
   <ion-grid style="position: absolute; height: 100%;">
-    <ion-row flex-wrap: wrap-reverse>
-      <ion-col>
+    <ion-row style="height: 20%;">
+      <ion-col col-6 offset-3>
         <div style="position: absolute; width: 100%; height: 100%;">
+          <ngx-gauge class="gauge-custom" style="margin-left: auto; margin-right: auto; display: block;" *ngIf="scoreLoaded" [type]="gaugeChartType" 
+            [value]="score" 
+            [label]="gaugeChartLabel"  
+            [append]="gaugeChartAppend"
+            [thresholds]="gaugeChartThresholdConfig"
+            [duration]="gaugeChartDuration"
+            [cap]="gaugeChartCap"
+            [thick]="gaugeChartThick"
+            [size]="gaugeChartSize">
+          </ngx-gauge>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row style="height: 40%;">
+      <ion-col>
+        <div style="position: absolute; width: 70%; left: 10%;">
           <canvas baseChart *ngIf="temperatureLoaded"
                     [datasets]="temperatureChartData"
                     [labels]="temperatureChartLabels"
@@ -15,7 +31,7 @@
         </div>
       </ion-col>
       <ion-col>
-        <div style="display: block; margin-left: auto; margin-right: auto;">
+        <div style="position: absolute; width: 70%; left: 10%;">
           <canvas baseChart *ngIf="brightnessLoaded"
                       [datasets]="brightnessChartData"
                       [labels]="brightnessChartLabels"
@@ -27,9 +43,9 @@
         </div>
       </ion-col>
     </ion-row>
-    <ion-row flex-wrap: wrap-reverse>
+    <ion-row style="height: 40%;">
       <ion-col>
-        <div style="position: absolute; width: 100%; height: 100%;">
+        <div style="position: absolute; width: 70%; left: 10%;">
           <canvas baseChart *ngIf="airQualityLoaded"
                       [datasets]="airQualityChartData"
                       [labels]="airQualityChartLabels"
@@ -41,7 +57,7 @@
         </div>
       </ion-col>
       <ion-col>
-        <div style="display: block; margin-left: auto; margin-right: auto;">
+        <div style="position: absolute; width: 70%; left: 10%;">
           <canvas baseChart *ngIf="soundLoded"
                       [datasets]="soundChartData"
                       [labels]="soundChartLabels"
