@@ -21,7 +21,7 @@ export class Popup {
   public airQualityChartLabels: Array<any> = []
   public temperatureLoaded = false
   public brightnessLoaded = false
-  public soundLoded = false
+  public soundLoaded = false
   public airQualityLoaded = false
   public score
   public scoreLoaded = false
@@ -61,7 +61,7 @@ export class Popup {
       if (results != null && results.length != 0){
         that.soundChartData =  [{data: Object.keys(results).map(item => results[item].value), label: "Son", fill: false, borderColor: "grey"}]
         that.soundChartLabels = Object.keys(results).map(item => moment.unix(Number(results[item].timestamp)).format("hh:mm"))
-        that.soundLoded = true
+        that.soundLoaded = true
       }
     });
     firebase.database().ref('/air_quality/' + NodeId).limitToLast(this.limitToLoad).once('value').then(function(snapshot) {
@@ -137,19 +137,19 @@ export class Popup {
       let score : number = 0;
       let count : number = 0;
       
-      if (temperatureAvg !== undefined) {
+      if (temperatureAvg !== null) {
         score += checkAccuracy(temperatureAvg, 19, 22);
         count++;
       }
-      if (soundLevelAvg !== undefined) {
+      if (soundLevelAvg !== null) {
         score += checkAccuracy(soundLevelAvg, 10, 15);
         count++;
       }
-      if (airQualityAvg !== undefined) {
+      if (airQualityAvg !== null) {
         score += checkAccuracy(airQualityAvg, 100, 120);
         count++;
       }
-      if (brightnessAvg !== undefined) {
+      if (brightnessAvg !== null) {
         score += checkAccuracy(brightnessAvg, 120, 180);
         count++;
       }
