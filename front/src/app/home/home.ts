@@ -78,7 +78,7 @@ export class HomePage {
     var northEast: [number, number] = [627.1875, 84.8024737243345];
     this.map.setMaxBounds(new L.LatLngBounds(southWest, northEast));
     this.geoJsonLayer = L.geoJSON(null,{style: style, onEachFeature: onEachFeature }).addTo(this.map);
-    this.heatMapLayer = L.heatLayer([], {radius: 100, gradient: {0.33: 'red', 0.66: 'orange', 1: 'green'}, blur:10}).addTo(this.map);
+    this.heatMapLayer = L.heatLayer([], {radius: 100, gradient: {0.33: 'red', 0.66: 'orange', 1.0: 'green'}, blur:30}).addTo(this.map);
   }
 
   openPopover(myEvent) {
@@ -182,6 +182,7 @@ export class HomePage {
         count++;
       }
       score = score/count;
+      console.log(score)
       return score
 
       function checkAccuracy(value: number, min: number, max: number): number{

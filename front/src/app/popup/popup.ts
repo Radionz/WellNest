@@ -52,7 +52,7 @@ export class Popup {
       let results = snapshot.val()
       if (results != null && results.length != 0){
         that.temperatureChartData =  [{data: Object.keys(results).map(item => results[item].value), label: "Température", fill: false, borderColor: "red"}]
-        that.temperatureChartLabels = Object.keys(results).map(item => moment.unix(Number(results[item].timestamp)).format("hh:mm"))
+        that.temperatureChartLabels = Object.keys(results).map(item => moment(Number(results[item].timestamp)).format("hh:mm"))
         that.temperatureLoaded = true
       }
     });
@@ -60,7 +60,7 @@ export class Popup {
       let results = snapshot.val()
       if (results != null && results.length != 0){
         that.soundChartData =  [{data: Object.keys(results).map(item => results[item].value), label: "Son", fill: false, borderColor: "grey"}]
-        that.soundChartLabels = Object.keys(results).map(item => moment.unix(Number(results[item].timestamp)).format("hh:mm"))
+        that.soundChartLabels = Object.keys(results).map(item => moment(Number(results[item].timestamp)).format("hh:mm"))
         that.soundLoaded = true
       }
     });
@@ -68,7 +68,7 @@ export class Popup {
       let results = snapshot.val()
       if (results != null && results.length != 0){
         that.airQualityChartData =  [{data: Object.keys(results).map(item => results[item].value), label: "Qualité de l'air", fill: false, borderColor: "green"}]
-        that.airQualityChartLabels = Object.keys(results).map(item => moment.unix(Number(results[item].timestamp)).format("hh:mm"))
+        that.airQualityChartLabels = Object.keys(results).map(item => moment(Number(results[item].timestamp)).format("hh:mm"))
         that.airQualityLoaded = true
       }
     });
@@ -76,7 +76,7 @@ export class Popup {
       let results = snapshot.val()
       if (results != null && results.length != 0){
         that.brightnessChartData =  [{data: Object.keys(results).map(item => results[item].value), label: "Luminosité", fill: false, borderColor: "yellow"}]
-        that.brightnessChartLabels = Object.keys(results).map(item => moment.unix(Number(results[item].timestamp)).format("hh:mm"))
+        that.brightnessChartLabels = Object.keys(results).map(item => moment(Number(results[item].timestamp)).format("hh:mm"))
         that.brightnessLoaded = true
       }
     });
@@ -231,7 +231,7 @@ export class Popup {
           ticks: {
               fontColor: 'white',
               min: 0,
-              max: 500
+              max: 100
           },
       }],
       xAxes: [{
@@ -254,7 +254,7 @@ export class Popup {
           ticks: {
               fontColor: 'white',
               min: 0,
-              max: 500
+              max: 100
           },
       }],
       xAxes: [{

@@ -135,7 +135,7 @@ export class Local implements AutoCompleteService {
                                             {
                                               "type": "Feature",
                                               "properties": {
-                                                "id": "N1"
+                                                "id": "N160"
                                               },
                                               "geometry": {
                                                 "type": "Point",
@@ -148,7 +148,7 @@ export class Local implements AutoCompleteService {
                                             {
                                               "type": "Feature",
                                               "properties": {
-                                                "id": "N1"
+                                                "id": "N141"
                                               },
                                               "geometry": {
                                                 "type": "Point",
@@ -161,7 +161,7 @@ export class Local implements AutoCompleteService {
                                             {
                                               "type": "Feature",
                                               "properties": {
-                                                "id": "N1"
+                                                "id": "N252"
                                               },
                                               "geometry": {
                                                 "type": "Point",
@@ -266,7 +266,9 @@ export class Local implements AutoCompleteService {
                                           },
                                           {
                                             "type": "Feature",
-                                            "properties": {},
+                                            "properties": {
+                                              "id": "N36"
+                                            },
                                             "geometry": {
                                               "type": "Point",
                                               "coordinates": [
@@ -332,7 +334,9 @@ export class Local implements AutoCompleteService {
                                           },
                                           {
                                             "type": "Feature",
-                                            "properties": {},
+                                            "properties": {
+                                              "id": "N36"
+                                            },
                                             "geometry": {
                                               "type": "Point",
                                               "coordinates": [
