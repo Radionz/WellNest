@@ -39,57 +39,20 @@ app.get('/', (req, res) => {
 
 // get last 100 sensorData
 app.get('/api/sensorData', (req, res) => {
-    SensorData.findAll({ limit: 100 }).then(sensorDatas => res.json(sensorDatas))
+    SensorData.findAll({ limit: 100, order: [ ['createdAt', 'DESC'] ] }).then(sensorDatas => res.json(sensorDatas))
 })
 
-var ex = [
-    {
-      "id": 1,
-      "nodeID": 1,
-      "sensorName": "LGT",
-      "sensorValue": 150,
-      "createdAt": "2018-05-13T18:41:48.000Z"
-    },
-    {
-      "id": 2,
-      "nodeID": 1,
-      "sensorName": "TMP",
-      "sensorValue": 22.5,
-      "createdAt": "2018-05-13T18:41:48.000Z"
-    },
-    {
-      "id": 3,
-      "nodeID": 2,
-      "sensorName": "LGT",
-      "sensorValue": 180,
-      "createdAt": "2018-05-13T18:41:51.000Z"
-    },
-    {
-      "id": 4,
-      "nodeID": 1,
-      "sensorName": "SND",
-      "sensorValue": 12,
-      "createdAt": "2018-05-13T18:41:53.000Z"
-    },
-    {
-      "id": 5,
-      "nodeID": 2,
-      "sensorName": "AIR",
-      "sensorValue": 14,
-      "createdAt": "2018-05-13T18:41:55.000Z"
-    }];
-
-var job = schedule.scheduleJob('*/30 * * * * *', function(){
-    console.log('Job executed at ' + moment().format('LLLL'));
+var job = schedule.scheduleJob('*/2 * * * *', function(){
+    //console.log('Job executed at ' + moment().format('LLLL'));
 
     SensorData.findAll({
         where: {
             createdAt: {
-            [Op.gt]: new Date(new Date() - 30)
+            [Op.gt]: new Date(new Date() - 120)
             }
         }
     }).then(function(sensorDatas){
-        console.log(JSON.stringify(sensorDatas, null, 4));
+        //console.log(JSON.stringify(sensorDatas, null, 4));
         
         for(let sensorData of ex){     
             switch (sensorData.sensorName) {
