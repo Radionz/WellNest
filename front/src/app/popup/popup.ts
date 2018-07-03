@@ -208,7 +208,7 @@ export class Popup {
           ticks: {
               fontColor: 'white',
               min: 0,
-              max: 2000
+              max: 255
           },
       }],
       xAxes: [{
